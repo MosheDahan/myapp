@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 
 interface ContactFormData {
   firstname: string;
@@ -8,29 +8,29 @@ interface ContactFormData {
 
 export default function Exe1bForm() {
   const [form, setForm] = useState<ContactFormData>({
-    firstname: "",
-    email: "",
-    message: "",
+    firstname: '',
+    email: '',
+    message: '',
   });
 
-  function handleChange(
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+  function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    const fieldName = event.target.name as keyof ContactFormData;
+
+    setForm((prevForm) => ({
+      ...prevForm,
+      [fieldName]: event.target.value,
+    }));
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
 
     if (
-      form.firstname.trim() === "" ||
-      form.email.trim() === "" ||
-      form.message.trim() === ""
+      form.firstname.trim() === '' ||
+      form.email.trim() === '' ||
+      form.message.trim() === ''
     ) {
-      alert("יש למלא את כל השדות");
+      alert('Please fill in all fields');
       return;
     }
 
@@ -41,7 +41,7 @@ export default function Exe1bForm() {
     <form onSubmit={handleSubmit}>
       <input
         type="text"
-        name="name"
+        name="firstname"
         value={form.firstname}
         onChange={handleChange}
         placeholder="Name"

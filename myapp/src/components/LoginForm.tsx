@@ -1,28 +1,36 @@
-import { useState } from 'react';
+import { useState, type ChangeEvent } from 'react';
 
 export default function LoginForm() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-    function handleUsernameChange(e: React.ChangeEvent<HTMLInputElement>) {
-        console.log(e.target.value);
-        setUsername(e.target.value);
-    }
+  function handleUsernameChange(event: ChangeEvent<HTMLInputElement>) {
+    setUsername(event.target.value);
+  }
 
-    // function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
-    //     console.log(e.target.value);
-    //     setPassword(e.target.value);
-    // }
-    function handleLogin() {
-        console.log(username, password);
-    }
+  function handlePasswordChange(event: ChangeEvent<HTMLInputElement>) {
+    setPassword(event.target.value);
+  }
 
-    return (
-        <div>
-            <input type="text" placeholder="Username"  onChange={handleUsernameChange} />
-            {/* <input type="password" placeholder="Password"  onChange={handlePasswordChange} /> */}
-            <input type="text" placeholder="Email"  onChange={(e:React.ChangeEvent<HTMLInputElement>)=>setUsername(e.target.value)} />
-            <button onClick={handleLogin}>Login</button>
-        </div>
-    );
+  function handleLogin() {
+    console.log(username, password);
+  }
+
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder="Username"
+        value={username}
+        onChange={handleUsernameChange}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={handlePasswordChange}
+      />
+      <button onClick={handleLogin}>Login</button>
+    </div>
+  );
 }

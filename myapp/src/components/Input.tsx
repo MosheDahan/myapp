@@ -1,26 +1,20 @@
-import { useState } from 'react';
+import { useState, type ChangeEvent, type MouseEvent } from 'react';
 
 export default function Input() {
-    const [value, setValue] = useState('john');
+  const [value, setValue] = useState<string>('john');
 
-    function handleChnage(e: React.ChangeEvent<HTMLInputElement>) {
-        console.log(e);
-        console.log(e.target)
-        console.log(e.target.value)
-        let v = e.target.value;
-        setValue(v);
-    }
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    setValue(event.target.value);
+  }
 
-    function handleClick(e: React.MouseEvent<HTMLParagraphElement>) {
-        console.log(e);
-        console.log(e.target)// <p>click me</p>
-    }
+  function handleClick(event: MouseEvent<HTMLParagraphElement>) {
+    console.log(event.target);
+  }
+
   return (
     <div>
-      <input type="text"  onChange={handleChnage} />
-
+      <input type="text" value={value} onChange={handleChange} />
       <p onClick={handleClick}>click me</p>
-
       <p>hi {value}</p>
     </div>
   );

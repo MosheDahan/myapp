@@ -9,7 +9,7 @@ interface ContactFormData {
 export default function ContactForm() {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
-  const [age, setAge] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,17 +20,35 @@ export default function ContactForm() {
     setEmail(e.target.value);
   };
 
-  const handleAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAge(e.target.value);
+  const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(e.target.value);
   };
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (!name.trim() || !email.trim() || !message.trim()) {
+      setErrorMessage('Please fill in all fields');
+      return;
+    }
+
     const formData: ContactFormData = {
-      name: (e.currentTarget.elements.namedItem('name') as HTMLInputElement).value,
-      email: (e.currentTarget.elements.namedItem('email') as HTMLInputElement).value,
-      message: (e.currentTarget.elements.namedItem('message') as HTMLTextAreaElement).value,
+      name: name.trim(),
+      email: email.trim(),
+      message: message.trim(),
     };
+
+    setErrorMessage('');
     console.log(formData);
   }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input name="name" value={name} onChange={handleNameChange} placeholder="Name" />
+      <input name="email" value={email} onChange={handleEmailChange} placeholder="Email" />
+      <textarea name="message" value={message} onChange={handleMessageChange} placeholder="Message" />
+      {errorMessage && <p>{errorMessage}</p>}
+      <button type="submit">Send</button>
+    </form>
+  );
 }
