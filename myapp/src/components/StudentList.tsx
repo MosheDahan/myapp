@@ -39,18 +39,41 @@ export default function StudentList() {
     };
 
     return (
-        <div>
-            <input type="text" value={studentName} onChange={handleChange} placeholder="Enter student name" />
-            <input type="number" value={age || ''} onChange={handleAgeChange} placeholder="Enter student age" />
-            <button onClick={addStudent}> Add Student </button>
-            <li>
-                {students.map((student) => (
-                    <div key={student.id}>
-                        {student.studentName} - {student.age}
-                        <button onClick={() => removeStudent(student.id)}> Remove </button>
-                    </div>
-                ))}
-            </li>
+        <div style={{
+            minHeight: '30vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '20px 0'
+        }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxWidth: '500px', width: '100%' }}>
+                <div style={{ display: 'flex', gap: '12px' }}>
+                    <input
+                        type="text"
+                        value={studentName}
+                        onChange={handleChange}
+                        placeholder="Enter student name"
+                        style={{ flex: 1, padding: '10px 12px' }}
+                    />
+                    <input
+                        type="number"
+                        value={age || ''}
+                        onChange={handleAgeChange}
+                        placeholder="Enter student age"
+                        style={{ flex: 1, padding: '10px 12px' }}
+                    />
+                    <button onClick={addStudent} style={{ padding: '10px 16px' }}> Add Student </button>
+                </div>
+
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {students.map((student) => (
+                        <li key={student.id} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <span>{student.studentName} - {student.age}</span>
+                            <button onClick={() => removeStudent(student.id)} style={{ padding: '8px 12px' }}> Remove </button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 }
